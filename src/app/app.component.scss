@@ -1,0 +1,26 @@
+ul{
+    li{
+     font-size: 15px;
+        span{
+            color: #e6b2b2;
+            margin-right: 15px;
+        }
+    }
+    .active {
+        font-weight: 500;
+    }
+}
+
+#navbar{
+    background-color: #808080;
+}
+
+#navbarNav{
+    ul{
+    border-bottom: none;
+    }
+}
+
+.logo-image{
+    width: 50%;
+}
