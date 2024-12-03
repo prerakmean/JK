@@ -66,6 +66,28 @@ export class CommonService {
     });
   }
 
+  getIngestionStatus(id: any): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/ingestion-status`, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'x-access-token': JSON.parse(localStorage.getItem('token') || ''),
+          user_id: id,
+        }),
+      })
+      .pipe(map(this.extractData), catchError(this.handleError));
+  }
+
+  triggerIngestion( id: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/trigger-ingestion`, {}, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': JSON.parse(localStorage.getItem('token') || ''),
+        user_id: id,
+      }),
+    });
+  }
+
   createTask(data: any, id: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/addTask`, data, {
       headers: new HttpHeaders({
