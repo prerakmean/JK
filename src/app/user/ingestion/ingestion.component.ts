@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, DoCheck, OnChanges, ViewChild } from '@angular/core';
 
 import { CommonService } from 'src/app/common.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,15 +7,14 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogContentComponent } from 'src/app/user/dialog-content/dialog-content.component';
 
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  selector: 'app-ingestion',
+  templateUrl: './ingestion.component.html',
+  styleUrls: ['./ingestion.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class IngestionComponent {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
@@ -29,6 +28,7 @@ export class UserListComponent implements OnInit {
   user_id: any;
   tableData = [];
   loadData = false;
+
   constructor(
     private commonService: CommonService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -36,16 +36,9 @@ export class UserListComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.user_id = localStorage.getItem('Unique_id') || '';
-    this.getUserData(this.user_id);
+    this.getIngestionData(this.user_id);
   }
 
-  ngOnInit(): void {
-    this.commonService.currentLoadData.subscribe((data) => {
-      if (data) {
-        this.getUserData(this.user_id);
-      }
-    });
-  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -68,9 +61,9 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  getUserData(id: any) {
+  getIngestionData(id: any) {
     this.loader = true;
-    this.commonService.getUserData(id).subscribe(
+    this.commonService.getIngestionStatus(id).subscribe(
       (res) => {
         if (res.status === 200) {
           this.tableData = res.data;
@@ -92,17 +85,20 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+  reloadData() {
+    this.historyColumns = [];
+    this.getIngestionData(this.user_id);
+  }
 
   updateData(data: any) {
+    console.log("adta",data)
     this.loader = true;
     let temp = [...data];
     this.displayedColumns = {
-      username: 'Username',
-      email: 'Email',
-      user_role: 'User Role',
-      unique_id: 'Unique Id',
+      unique_id: 'ID',
+      status: 'Status',
+      startTime: 'StartTime',
     };
-    this.historyColumns = ['PARAM0', 'PARAM1'];
     Object.keys(this.displayedColumns).map((key) => {
       if (this.displayedColumns[key] !== '') {
         this.historyColumns.push(key);
@@ -111,8 +107,6 @@ export class UserListComponent implements OnInit {
     this.historyColumns = this.historyColumns.sort(
       (a: any, b: any) => a.substring(5) - b.substring(5)
     );
-    this.displayedColumns['PARAM0'] = 'ACTION';
-    this.displayedColumns['PARAM1'] = 'DELETE';
     let final = temp;
     this.pageLength = final.length;
     this.dataSource = new MatTableDataSource(final);
@@ -122,51 +116,19 @@ export class UserListComponent implements OnInit {
     this.commonService.changeLoadData(false);
   }
 
-  reloadData() {
-    this.historyColumns = [];
-    this.getUserData(this.user_id);
-  }
+  addIngestion() {
 
-  getDetails(data: any) {
-    this.openDialog(data);
-  }
-
-  openDialog(data: any) {
-    let newData = {
-      Username: data.username,
-      Email: data.email,
-      'User Role': data.user_role,
-      'Unique Id': data.unique_id,
-    };
-    const dialogRef = this.dialog.open(DialogContentComponent, {
-      data: { type: 'viewDialog', data: newData },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-      if (result) {
-        this.getUserData(localStorage.getItem('Unique_id'));
-      }
-    });
-  }
-
-  deletetask(data: any) {
     this.loader = true;
-    console.log(data)
-    this.commonService
-      .deleteUser(data.unique_id, localStorage.getItem('Unique_id'))
-      .subscribe(
+      this.commonService.addIngestion(this.user_id).subscribe(
         (res) => {
           if (res.status === 200) {
-            this.getUserData(localStorage.getItem('Unique_id'));
+            this.loader = false;
+            this.reloadData();
             this.commonService.displaySwal(res.message, 'Success!', 'success');
-          } else if (res.status === 404) {
-          } else if (res.status === 401) {
-            localStorage.clear();
+          
+          } else {
             this.commonService.displaySwal(res.message, 'Info!', 'info');
-            this.router.navigateByUrl('/login');
           }
-          this.loader = false;
         },
         (err) => {
           this.loader = false;
@@ -174,5 +136,26 @@ export class UserListComponent implements OnInit {
         }
       );
   }
-}
 
+  getTimeDifference(givenTime: any): any {
+    const now = new Date(); // Current time
+    const givenDate = new Date(givenTime); // Parse the given time
+
+    const differenceInMs = now.getTime() - givenDate.getTime(); // Difference in milliseconds
+
+    // Convert milliseconds into meaningful units
+    const seconds = Math.floor(differenceInMs / 1000) % 60;
+    const minutes = Math.floor(differenceInMs / (1000 * 60)) % 60;
+    const hours = Math.floor(differenceInMs / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
+
+    return `${hours}:${minutes}:${seconds} ago`
+      // days-
+      // hours,
+      // minutes,
+      // seconds,
+    
+  }
+
+
+}

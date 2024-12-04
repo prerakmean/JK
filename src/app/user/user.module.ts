@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
-import { TaskComponent } from '../user/task/task.component';
 import { DashboardComponent } from '../user/dashboard/dashboard.component';
 import { DialogContentComponent } from '../user/dialog-content/dialog-content.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,14 +25,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { IngestionComponent } from './ingestion/ingestion.component';
 
 @NgModule({
   declarations: [
-    TaskComponent,
     DashboardComponent,
     DialogContentComponent,
     UploadDocumentComponent,
-    UserListComponent
+    UserListComponent,
+    IngestionComponent
   ],
   imports: [
     CommonModule,

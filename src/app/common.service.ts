@@ -68,7 +68,7 @@ export class CommonService {
 
   getIngestionStatus(id: any): Observable<any> {
     return this.http
-      .get(`${environment.apiUrl}/ingestion-status`, {
+      .get(`${environment.apiUrl}/getIngestion`, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'x-access-token': JSON.parse(localStorage.getItem('token') || ''),
@@ -78,8 +78,8 @@ export class CommonService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  triggerIngestion( id: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/trigger-ingestion`, {}, {
+  addIngestion( id: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/addIngestion`, {}, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-access-token': JSON.parse(localStorage.getItem('token') || ''),
