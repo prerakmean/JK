@@ -235,5 +235,15 @@ export class CommonService {
       );
   }
 
+  askQuestion(id:any,data: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/askQuestion`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': JSON.parse(localStorage.getItem('token') || ''),
+        user_id: id,
+      }),
+    });
+  }
+
 
 }

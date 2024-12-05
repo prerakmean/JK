@@ -1,27 +1,39 @@
 # Jk
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+This project  was  Angular Frontend (User Interface for Management and Q&A);
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+-For run this frontend you need to run backend first.
+-run npm i for install packages.
+-then run  ng serve  command;
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+Project Description:- 
+
+It basically have 4 roles :-
+ 1. Admin - change the User Role.(save in DB)
+ 2. Normal - by default any user signup it become Normal user,  can asked question till admin not change the role (save in DB)
+ 3. Developer- only Admin can make as Developer , role is to  Ingestion Management(datasave in DB)
+ 4. HR-only Admin can make as HR , role is to  Upload Document(only in frontend) 
+
+
+for admin login :-
+  email: admin@gmail.com
+  password:admin@123A
+
+
+
+code :- 
+ -In main module we have login , signup components and having common service ,with auth auth service;
+ - User module - have all rest of thing but call main module common service.
+
+ I used boootstrap and angulat material design and some basic CSS
+
+
+
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
