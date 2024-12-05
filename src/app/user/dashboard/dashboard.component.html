@@ -1,21 +1,26 @@
 <nav class="navbar  navbar-light bg-light">
-    <div class="container-fluid">
-        <div style="width: 100%;">
-          <a class="navbar-brand" href="https://jktech.com/" target="_blank">
-            <img  src="https://jktech.com/wp-content/uploads/2024/01/logo-jktech_new.png" alt="" >
-          </a>
-          <button  matTooltip="Logout" id="logout-btn"  type="submit"   mat-raised-button color="primary"  (click)="logout()" >Logout</button>
-        </div>
-    
+  <div class="container-fluid">
+    <div style="width: 100%;">
+      <a class="navbar-brand" href="https://jktech.com/" target="_blank">
+        <img src="https://jktech.com/wp-content/uploads/2024/01/logo-jktech_new.png" alt="">
+      </a>
+      <button matTooltip="Logout" id="logout-btn" type="submit" mat-raised-button color="primary"
+        (click)="logout()">Logout</button>
+    </div>
+
   </div>
 </nav>
 
 <div class="container ">
-    <div class="row">
-        <div class="col-md-12">
-            
-            <app-user-list  *ngIf="user_role == 1" ></app-user-list>
-                 <app-ingestion *ngIf="user_role == 3"></app-ingestion>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+
+      <app-user-list *ngIf="user_role == 1"></app-user-list>
+      <app-ingestion *ngIf="user_role == 3"></app-ingestion>
+      <app-upload-document *ngIf="user_role == 4"></app-upload-document>
+      <div *ngIf="user_role == 2">
+          <h2>Your are normal user So , your Admin need to upload your Role.</h2>
+      </div>
     </div>
+  </div>
 </div>

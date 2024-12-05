@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { AuthService } from './auth.service';
 
 const routes: Routes = [
   {
@@ -20,6 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
+    canActivate: [AuthService],
     loadChildren:()=>import('./user/user.module').then(comp=>comp.UserModule),
   },
 ]
