@@ -26,6 +26,7 @@ import { MatListModule } from '@angular/material/list';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { IngestionComponent } from './ingestion/ingestion.component';
+import { QuestionAnswerInterfaceComponent } from './question-answer-interface/question-answer-interface.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { IngestionComponent } from './ingestion/ingestion.component';
     DialogContentComponent,
     UploadDocumentComponent,
     UserListComponent,
-    IngestionComponent
+    IngestionComponent,
+    QuestionAnswerInterfaceComponent
   ],
   imports: [
     CommonModule,

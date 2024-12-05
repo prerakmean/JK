@@ -1,0 +1,51 @@
+
+
+<div class="container-fluid px-0" style="margin-top: 20px;">
+    <div class="back-container">
+  
+        <div class="row mx-0 px-3 mb-5" style="margin-top: -2%" >
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 mb-4 mt-3">
+                        <div class="card mx-0">
+                            <div class="card-header py-2">
+                                <h3 class="card-header-content my-0 text-center">
+                                    <span><i class="i-File-Edit" style="vertical-align: middle"></i></span>
+                                    <label class="ml-1 my-0 py-2"> Q&A Management</label>
+                                </h3>
+                            </div>
+            
+                        <div class="row mx-0 mb-3"  >
+
+                                    <div class="col-sm-12">
+                                        <mat-card>
+                                            <mat-card-title>You can asked Question So, just write something </mat-card-title>
+                                            <mat-card-content>
+                                              <form (ngSubmit)="submitQuestion()">
+                                                <mat-form-field appearance="outline">
+                                                  <mat-label>Your Question</mat-label>
+                                                  <textarea matInput [(ngModel)]="question" name="question"></textarea>
+                                                </mat-form-field>
+                                                <button class="btn" mat-raised-button color="primary" [disabled]="!question">Submit</button>
+                                              </form>
+                                            </mat-card-content>
+                                            <mat-card-content *ngIf="answer">
+                                              <h3>Answer</h3>
+                                              <p>{{ answer }}</p>
+                                              <!-- <h3>Relevant Excerpts</h3>
+                                              <ul>
+                                                <li *ngFor="let excerpt of excerpts">{{ excerpt }}</li>
+                                              </ul> -->
+                                            </mat-card-content>
+                                          </mat-card>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+  
+
